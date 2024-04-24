@@ -2,7 +2,7 @@
 """Async Generator"""
 
 from asyncio import sleep
-from random uniform
+from random import uniform
 from typing import Generator
 
 
