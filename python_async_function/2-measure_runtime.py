@@ -2,7 +2,7 @@
 """Create a measure_time function with integers n and max_delay"""
 
 import time
-from typing import Callable
+import asyncio
 
 wait_n = __import__('1-concurrent_coroutines').wait_n
 
