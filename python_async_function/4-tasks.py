@@ -10,4 +10,5 @@ task_wait_random = __import__('0-basic_async_syntax').wait_random
 async def task_wait_n(n: int, max_delay: int) -> List[float]:
     """Executes task_wait_random coroutine"""
     tasks = [task_wait_random(max_delay) for _ in range(n)]
-    return await asyncio.gather(*tasks)
+    delayed_tasks = [await task for task in asyncio.as_completed(tasks)]
+    return delayed_tasks
