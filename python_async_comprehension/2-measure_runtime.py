@@ -1,7 +1,7 @@
 #!/bin/usr/env python3
 """Run time for four parallel comprehensions"""
 
-mport asyncio
+import asyncio
 import time
 
 async_comprehension = __import__('1-async_comprehension').async_comprehension
