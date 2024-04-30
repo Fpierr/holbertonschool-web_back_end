@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Log statistics"""
+
 from pymongo import MongoClient
 
 
@@ -11,7 +12,7 @@ def log(a: dict) -> int:
 
 
 def print_nginx_logs_stats():
-    """Provide statistics for stored Nginx logs"""
+    """Provides some stats about Nginx logs stored in MongoDB"""
     print(f"{ log({}) } logs")
     print("Methods:")
     print(f"\tmethod GET: { log({'method': 'GET'}) }")
