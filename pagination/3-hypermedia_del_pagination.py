@@ -23,7 +23,6 @@ class Server:
                 reader = csv.reader(f)
                 dataset = [row for row in reader]
             self.__dataset = dataset[1:]
-
         return self.__dataset
 
     def indexed_dataset(self) -> Dict[int, List]:
@@ -37,17 +36,18 @@ class Server:
         return self.__indexed_dataset
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
-    """Implement method with two integers"""
-    assert isinstance(index, int) and isinstance(page_size, int)
-    assert 0 <= index < len(self.__indexed_dataset)
-    assert 0 < page_size <= len(self.__indexed_dataset)
+        """Implement method with two integers"""
+        assert isinstance(index, int) and isinstance(page_size, int)
+        assert 0 <= index < len(self.__indexed_dataset)
+        assert 0 < page_size <= len(self.__indexed_dataset)
 
-    dataset = self.indexed_dataset()
-    data = [dataset[next_index] for next_index in range(index, index + page_size) if dataset.get(next_index)]
+        dataset = self.indexed_dataset()
+        data = [dataset[next_index] for next_index in range(
+            index, index + page_size) if dataset.get(next_index)]
 
-    return {
-        'index': index,
-        'data': data,
-        'page_size': len(data),
-        'next_index': index + len(data)
-    }
+        return {
+            'index': index,
+            'data': data,
+            'page_size': len(data),
+            'next_index': index + len(data)
+        }
