@@ -1,5 +1,4 @@
-
-// Promise is handle or not
+// Handle multiple successful promises
 function handleResponseFromAPI(promise) {
   return promise
     .then(() => ({
