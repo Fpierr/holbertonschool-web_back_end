@@ -3,9 +3,9 @@
 
 from base_caching import BaseCaching
 
+
 class MRUCache(BaseCaching):
     """MRU cache system"""
-
 
     def __init__(self):
         """Initialize the cache"""
