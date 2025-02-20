@@ -1,40 +1,51 @@
-#!/usr/bin/env python3
-"""LRU Cache"""
+#!/usr/bin/python3
+"""LRU Caching"""
 
-from collections import OrderedDict
 from base_caching import BaseCaching
 
+
 class LRUCache(BaseCaching):
-    """LRU Cache system that inherits from BaseCaching"""
-    
-    
+    """LRU caching system"""
+
     def __init__(self):
-        """Initialize the cache"""
+        """Initialize"""
         super().__init__()
-        self.order = OrderedDict()
-    
+        self.order = []
+
     def put(self, key, item):
-        """Add an item in the cache"""
+        """Add item in cache"""
         if key is None or item is None:
             return
-        
-        if key in self.order:
-            self.order.move_to_end(key)
-        
-        self.order[key] = item
+
         self.cache_data[key] = item
-        
+
         if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-            """Remove the first item"""
-            lru_key, _ = self.order.popitem(last=False)
-            del self.cache_data[lru_key]
-            print(f"DISCARD: {lru_key}")
-    
+            lru_key = self.get_first_list(self.order)
+            if lru_key:
+                self.order.pop(0)
+                del self.cache_data[lru_key]
+                print(f"DISCARD: {lru_key}")
+
+        if key not in self.order:
+            self.order.append(key)
+        else:
+            self.mv_last_list(key)
+
     def get(self, key):
-        """Get an item from the cache"""
-        if key is None or key not in self.cache_data:
-            return None
-        
-        # Move the accessed item to the end
-        self.order.move_to_end(key)
-        return self.cache_data[key]
+        """Gets item by key"""
+        item = self.cache_data.get(key, None)
+        if item is not None:
+            self.mv_last_list(key)
+        return item
+
+    def mv_last_list(self, item):
+        """Move element to last idx"""
+        length = len(self.order)
+        if self.order[length - 1] != item:
+            self.order.remove(item)
+            self.order.append(item)
+
+    @staticmethod
+    def get_first_list(array):
+        """Get first element of the list"""
+        return array[0] if array else None
