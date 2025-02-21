@@ -7,9 +7,8 @@ from typing import List
 
 def filter_datum(fields: List[str], redaction: str, message: str,
                  separator: str) -> str:
-    """function filtered datum"""
-    for i in fields:
-        message = re.sub(i + "=.*?" + separator,
-                         i + "=" + redaction + separator,
-                         message)
+    """filter obfuscate data in a log message"""
+    for field in fields:
+        message = re.sub(field + r"=[^" + separator + r"]*",
+                         field + "=" + redaction, message)
     return message
