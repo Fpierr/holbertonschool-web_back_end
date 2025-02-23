@@ -1,10 +1,15 @@
+#!/usr/bin/env python3
+"""Session authentication view"""
+
+from api.v1.views import app_views
 from flask import request, jsonify
 from api.v1.app import auth
 from models.user import User
+import os
 
 
-@app.route('/api/v1/auth_session/login',
-           methods=['POST'], strict_slashes=False)
+@app_views.route('/api/v1/auth_session/login', methods=['POST'],
+                 strict_slashes=False)
 def login():
     """ Logs a user in by creating a session """
 
@@ -24,6 +29,8 @@ def login():
         return jsonify({"error": "wrong password"}), 401
 
     session_id = auth.create_session(user.id)
+
+    SESSION_NAME = os.getenv("SESSION_NAME")
 
     response = jsonify(user.to_json())
     response.set_cookie(SESSION_NAME, session_id)
