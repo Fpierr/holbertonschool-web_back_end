@@ -4,10 +4,12 @@
 from api.v1.views import app_views
 from flask import abort, jsonify, request
 from models.user import User
+from api.v1.app import auth
 from os import getenv
 
 
-@app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
+@app_views.route('/auth_session/login', methods=['POST'],
+                 strict_slashes=False)
 def login():
     """ POST /auth_session/login
     Return
@@ -35,31 +37,26 @@ def login():
         if not user.is_valid_password(password):
             return jsonify({"error": "wrong password"}), 401
 
-    from api.v1.app import auth
-
     user = found_users[0]
     session_id = auth.create_session(user.id)
 
-    SESSION_NAME = getenv("SESSION_NAME")
+    SESSION_NAME = getenv("SESSION_NAME", "_my_session_id")
 
     response = jsonify(user.to_json())
-    response.set_cookie(SESSION_NAME, session_id)
+    response.set_cookie(SESSION_NAME, session_id, httponly=True,
+                        secure=True, samesite="Lax")
 
     return response
 
 
-@app_views.route('/auth_session/logout',
-                 methods=['DELETE'], strict_slashes=False)
+@app_views.route('/api/v1/auth_session/logout', methods=['DELETE'],
+                 strict_slashes=False)
 def logout():
-    """ DELETE /auth_session/logout
-    Return:
-        - Empty dictionary if succesful
+    """ DELETE /api/v1/auth_session/logout
+    Returns:
+        - An empty dictionary if successful
     """
-    from api.v1.app import auth
-
-    deleted = auth.destroy_session(request)
-
-    if not deleted:
+    if not auth.destroy_session(request):
         abort(404)
 
     return jsonify({}), 200
