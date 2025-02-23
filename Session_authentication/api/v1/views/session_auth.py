@@ -1,38 +1,66 @@
 #!/usr/bin/env python3
-"""Session authentication view"""
+"""Session authentication views"""
 
 from api.v1.views import app_views
-from flask import request, jsonify
-from api.v1.app import auth
+from flask import jsonify, request
 from models.user import User
-import os
+from os import getenv
 
 
 @app_views.route('/api/v1/auth_session/login', methods=['POST'],
                  strict_slashes=False)
 def login():
-    """ Logs a user in by creating a session """
-
+    """ POST /api/v1/auth_session/login
+    Returns:
+        - The authenticated user details
+    """
     email = request.form.get('email')
-    password = request.form.get('password')
 
     if not email:
         return jsonify({"error": "email missing"}), 400
+
+    password = request.form.get('password')
+
     if not password:
         return jsonify({"error": "password missing"}), 400
 
-    user = User.search({'email': email})
-    if user is None:
+    try:
+        found_users = User.search({'email': email})
+    except Exception:
         return jsonify({"error": "no user found for this email"}), 404
 
-    if not user.is_valid_password(password):
-        return jsonify({"error": "wrong password"}), 401
+    if not found_users:
+        return jsonify({"error": "no user found for this email"}), 404
 
+    for user in found_users:
+        if not user.is_valid_password(password):
+            return jsonify({"error": "wrong password"}), 401
+
+    from api.v1.app import auth
+
+    user = found_users[0]
     session_id = auth.create_session(user.id)
 
-    SESSION_NAME = os.getenv("SESSION_NAME")
+    SESSION_NAME = getenv("SESSION_NAME")
 
     response = jsonify(user.to_json())
     response.set_cookie(SESSION_NAME, session_id)
 
     return response
+
+
+@app_views.route('/api/v1/auth_session/logout', methods=['DELETE'],
+                 strict_slashes=False)
+def logout():
+    """ DELETE /api/v1/auth_session/logout
+    Returns:
+        - An empty dictionary if successful
+    """
+    from api.v1.app import auth
+
+    deleted = auth.destroy_session(request)
+
+    if not deleted:
+        abort(404)
+
+    return jsonify({}), 200
