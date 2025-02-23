@@ -4,9 +4,9 @@
 from flask import request
 from typing import List, TypeVar
 
+
 class Auth:
     """To manage API authentication"""
-
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """returns False - path and excluded_paths"""
