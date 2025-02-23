@@ -2,7 +2,7 @@
 """Session authentication views"""
 
 from api.v1.views import app_views
-from flask import jsonify, request, abort
+from flask import jsonify, request, abort, make_response
 from models.user import User
 from os import getenv
 
@@ -10,10 +10,6 @@ from os import getenv
 @app_views.route('/api/v1/auth_session/login', methods=['POST'],
                  strict_slashes=False)
 def login():
-    """ POST /api/v1/auth_session/login
-    Returns:
-        - The authenticated user details
-    """
     email = request.form.get('email')
 
     if not email:
@@ -47,20 +43,3 @@ def login():
     response.set_cookie(SESSION_NAME, session_id)
 
     return response
-
-
-@app_views.route('/api/v1/auth_session/logout', methods=['DELETE'],
-                 strict_slashes=False)
-def logout():
-    """ DELETE /api/v1/auth_session/logout
-    Returns:
-        - An empty dictionary if successful
-    """
-    from api.v1.app import auth
-
-    deleted = auth.destroy_session(request)
-
-    if not deleted:
-        abort(404)
-
-    return jsonify({}), 200
