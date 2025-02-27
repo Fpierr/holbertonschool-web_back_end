@@ -8,10 +8,10 @@ from sqlalchemy.orm.session import Session
 from typing import TypeVar
 from user import Base, User
 
-
 class DB:
     """DB class
     """
+
 
     def __init__(self) -> None:
         """Initialize a new DB instance
@@ -35,5 +35,4 @@ class DB:
         new_user = User(email=email, hashed_password=hashed_password)
         self.__session.add(new_user)
         self.__session.commit()
-
         return new_user
