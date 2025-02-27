@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create Modele User ORM"""
+"""Create Model User ORM"""
 
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
