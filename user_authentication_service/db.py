@@ -40,18 +40,18 @@ class DB:
         return user
 
     def find_user_by(self, **kwargs) -> User:
-        """Return the first row or users table filtering"""
+        """Return the first row in users table matching the filter"""
         if not kwargs:
             raise InvalidRequestError
 
         column_key = User.__table__.columns.keys()
         for key in kwargs.keys():
-            user = self._session.query(User).filter(**kwargs).first()
-
-            if key not in colomn_key:
+            if key not in column_key:
                 raise InvalidRequestError
 
-            if user is none:
-                raise NoResultFound
+        user = self._session.query(User).filter_by(**kwargs).first()
+
+        if user is None:
+            raise NoResultFound
 
         return user
