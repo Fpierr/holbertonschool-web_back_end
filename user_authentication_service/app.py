@@ -33,6 +33,7 @@ def register_users():
     message = {"email": email, "message": "user created"}
     return jsonify(message), 200
 
+
 @app.route('/sessions', methods=['POST'])
 def login():
     """Login route to start a session"""

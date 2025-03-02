@@ -12,6 +12,7 @@ def _hash_password(password: str) -> str:
     hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
     return hash
 
+
 def _generate_uuid() -> str:
     """Generate a new UUID as a string
 
@@ -19,6 +20,7 @@ def _generate_uuid() -> str:
         str: A string representation of a UUID
     """
     return str(uuid.uuid4())
+
 
 class Auth:
     """Auth class to interact with the authentication database.
@@ -45,7 +47,7 @@ class Auth:
         """Validate login credentials"""
         try:
             user = self._db.find_user_by(email=email)
-            
+
             if bcrypt.checkpw(password.encode(), user.hashed_password):
                 return True
             return False
