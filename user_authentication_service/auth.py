@@ -70,7 +70,7 @@ class Auth:
 
     def get_user_from_session_id(self, session_id: str) -> Union[str, None]:
         """Find user by session ID"""
-        if session_id is None or user is None:
+        if session_id is None:
             return None
 
         try:
