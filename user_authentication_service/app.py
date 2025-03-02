@@ -16,7 +16,7 @@ def home():
     return jsonify(message)
 
 @app.route('/users', methods=['POST'])
-def users():
+def register_users():
     """define route users function"""
     try:
         email = request.form['email']
