@@ -11,10 +11,10 @@ def _hash_password(password: str) -> str:
     hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
     return hash
 
+
 class Auth:
     """Auth class to interact with the authentication database.
     """
-
 
     def __init__(self):
         self._db = DB()
