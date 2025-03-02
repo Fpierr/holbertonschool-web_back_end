@@ -6,6 +6,7 @@ from db import DB
 from sqlalchemy.orm.exc import NoResultFound
 from user import User
 import uuid
+from typing import Union
 
 
 def _hash_password(password: str) -> str:
@@ -29,7 +30,7 @@ class Auth:
     def __init__(self):
         self._db = DB()
 
-    def register_user(self, email: str, password: str) -> User:
+    def register_user(self, email: str, password: str) -> Union[str, None]:
         """register user"""
 
         try:
@@ -108,7 +109,7 @@ class Auth:
         """Update password if reset token is valid"""
 
         if not reset_token or not password:
-            raise ValueError
+            return None
 
         try:
             user = self._db.find_user_by(reset_token=reset_token)
