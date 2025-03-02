@@ -43,10 +43,17 @@ def login():
     except KeyError:
         abort(400)
 
-    if AUTH.valid_login(email, password):
-        return jsonify({"message": "Logged in"}), 200
+    if not AUTH.valid_login(email, password):
+        abort(401)
 
-    return jsonify({"message": "Invalid credentials"}), 401
+    session_id = AUTH.create_session(email)
+
+    message = {"email": email, "message": "logged in"}
+    response = jsonify(message)
+
+    response.set_cookie("session_id", session_id)
+
+    return response
 
 
 if __name__ == "__main__":
