@@ -15,6 +15,7 @@ def home():
     message = {"message": "Bienvenue"}
     return jsonify(message)
 
+
 @app.route('/users', methods=['POST'])
 def register_users():
     """define route users function"""
