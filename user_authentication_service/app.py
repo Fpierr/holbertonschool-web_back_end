@@ -33,6 +33,20 @@ def register_users():
     message = {"email": email, "message": "user created"}
     return jsonify(message), 200
 
+@app.route('/sessions', methods=['POST'])
+def login():
+    """Login route to start a session"""
+    try:
+        email = request.form['email']
+        password = request.form['password']
+    except KeyError:
+        abort(400)
+
+    if AUTH.valid_login(email, password):
+        return jsonify({"message": "Logged in"}), 200
+
+    return jsonify({"message": "Invalid credentials"}), 401
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")
