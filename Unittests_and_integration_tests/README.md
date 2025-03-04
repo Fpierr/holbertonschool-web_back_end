@@ -1,6 +1,6 @@
 # Unittests_and_integration_tests
 
-## Description
+# Description
 Unit testing is the process of testing that a particular function returns expected results for different set of inputs. A unit test is supposed to test standard inputs and corner cases. A unit test should only test the logic defined inside the tested function. Most calls to additional functions should be mocked, especially if they make network or database calls.
 
 The goal of a unit test is to answer the question: if everything defined outside this function works as expected, does this function work as expected?
@@ -11,25 +11,25 @@ Integration tests will test interactions between every part of your code.
 
 Execute your tests with
 ```
-$ python -m unittest path/to/test_file.py
+$ python - m unittest path/to/test_file.py
 ```
 
-## Resources
-##### Read or watch:
+# Resources
+# Read or watch:
 
-- [unittest — Unit testing framework](https://docs.python.org/3/library/unittest.html)
-- [unittest.mock — mock object library](https://docs.python.org/3/library/unittest.mock.html)
-- [How to mock a readonly property with mock?](https://stackoverflow.com/questions/11836436/how-to-mock-a-readonly-property-with-mock)
-- [parameterized](https://pypi.org/project/parameterized/)
-- [Memoization](https://en.wikipedia.org/wiki/Memoization)
-
-
-## Required files
-
-- `utils.py` (or [download](https://intranet-projects-files.s3.amazonaws.com/webstack/utils.py))
-- `client.py` (or [download](https://intranet-projects-files.s3.amazonaws.com/webstack/client.py))
-- `fixtures.py` (or [download](https://intranet-projects-files.s3.amazonaws.com/webstack/fixtures.py))
+- [unittest — Unit testing framework](https: // docs.python.org/3/library/unittest.html)
+- [unittest.mock — mock object library](https: // docs.python.org/3/library/unittest.mock.html)
+- [How to mock a readonly property with mock?](https: // stackoverflow.com/questions/11836436/how-to-mock-a-readonly-property-with -mock)
+- [parameterized](https: // pypi.org/project/parameterized/)
+- [Memoization](https: // en.wikipedia.org/wiki/Memoization)
 
 
-## AUthor
-[Fanuel Pierre](https://github.com/fpierr)
+# Required files
+
+- `utils.py` ( or [download](https: // intranet-projects-files.s3.amazonaws.com/webstack/utils.py))
+- `client.py` ( or [download](https: // intranet-projects-files.s3.amazonaws.com/webstack/client.py))
+- `fixtures.py` ( or [download](https: // intranet-projects-files.s3.amazonaws.com/webstack/fixtures.py))
+
+
+# AUthor
+[Fanuel Pierre](https: // github.com/fpierr)
