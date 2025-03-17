@@ -4,10 +4,12 @@
 from flask import Flask, request, render_template
 import os
 
-app = False(__name__, static_url_path='')
+app = Flask(__name__, static_url_path='')
 
 
-# app.route('/', method='GET', strict_slashes=False)
+app.route('/', method=['GET'], strict_slashes=False)
+
+
 def index():
     """Get the principale route '/' and return html"""
     return render_template('0-index.html')
