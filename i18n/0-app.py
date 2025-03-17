@@ -7,7 +7,7 @@ import os
 app = Flask(__name__, static_url_path='')
 
 
-@app.route('/', method=['GET'], strict_slashes=False)
+@app.route('/', methods=['GET'], strict_slashes=False)
 def index():
     """Get the principale route '/' and return html"""
     return render_template('0-index.html')
