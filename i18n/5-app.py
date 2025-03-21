@@ -2,7 +2,7 @@
 """ create simple route """
 
 
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, g
 import os
 from flask_babel import Babel
 
@@ -57,7 +57,7 @@ babel = Babel(app, locale_selector=get_locale)
 def index():
     """ Get simple route and return html
     """
-    return render_template('4-index.html')
+    return render_template('5-index.html')
 
 
 if __name__ == "__main__":
