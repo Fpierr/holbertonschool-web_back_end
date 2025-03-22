@@ -5,8 +5,6 @@
 from flask import Flask, request, render_template, g
 import os
 from flask_babel import Babel
-import pytz
-from pytz.exceptions import UnknownTimeZoneError
 
 app = Flask(__name__)
 babel = Babel(app)
@@ -44,6 +42,24 @@ def get_locale():
     )
 
 
+def get_timezone():
+    """ Return timezone or UTC"""
+    timezone = request.args.get('timezone')
+    if timezone:
+        try:
+            pytz.timezone(timezone)
+            return timezone
+        except UnknownTimeZoneError:
+            pass
+    if g.user and g.user['timezone']:
+        try:
+            pytz.timezone(g.user['timezone'])
+            return g.user['timezone']
+        except UnknownTimeZoneError:
+            pass
+    return app.config['BABEL_DEFAULT_TIMEZONE']
+
+
 def get_user():
     """Returns a user dictionary or None"""
     user_id = request.args.get('login_as')
@@ -66,7 +82,7 @@ babel = Babel(app, locale_selector=get_locale)
 def index():
     """ Get simple route and return html
     """
-    return render_template('6-index.html')
+    return render_template('7-index.html')
 
 
 if __name__ == "__main__":
