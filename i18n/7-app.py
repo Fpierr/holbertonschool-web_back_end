@@ -59,7 +59,7 @@ def get_timezone():
             return g.user['timezone']
         except UnknownTimeZoneError:
             pass
-    return app.config['BABEL_DEFAULT_TIMEZONE']
+    return app.config['BABEL_DEFAULT_LOCALE']
 
 
 def get_user():

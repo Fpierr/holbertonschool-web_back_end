@@ -38,7 +38,7 @@ def get_locale():
 
     return (
         request.accept_languages.best_match(app.config['LANGUAGES']) or
-        app.config['BABEL_DEFAULT_TIMEZONE']
+        app.config['BABEL_DEFAULT_LOCALE']
     )
 
 
