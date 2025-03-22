@@ -5,6 +5,8 @@
 from flask import Flask, request, render_template, g
 import os
 from flask_babel import Babel
+import pytz
+from pytz.exceptions import UnknownTimeZoneError
 
 app = Flask(__name__)
 babel = Babel(app)
@@ -75,7 +77,8 @@ def before_request():
     g.user = get_user()
 
 
-babel = Babel(app, locale_selector=get_locale)
+babel = Babel(app, locale_selector=get_locale,
+              timezone_selector=get_timezone)
 
 
 @app.route('/', methods=['GET'])

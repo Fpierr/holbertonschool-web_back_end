@@ -5,8 +5,6 @@
 from flask import Flask, request, render_template, g
 import os
 from flask_babel import Babel
-import pytz
-from pytz.exceptions import UnknownTimeZoneError
 
 app = Flask(__name__)
 babel = Babel(app)
