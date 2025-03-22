@@ -77,8 +77,7 @@ def before_request():
     g.user = get_user()
 
 
-babel = Babel(app, locale_selector=get_locale,
-              timezone_selector=get_timezone)
+babel.init_app(app, locale_selector=get_locale, timezone_selector=get_timezone)
 
 
 @app.route('/', methods=['GET'])
