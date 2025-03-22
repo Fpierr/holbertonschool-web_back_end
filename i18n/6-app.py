@@ -64,7 +64,7 @@ babel = Babel(app, locale_selector=get_locale)
 def index():
     """ Get simple route and return html
     """
-    return render_template('5-index.html')
+    return render_template('6-index.html')
 
 
 if __name__ == "__main__":
