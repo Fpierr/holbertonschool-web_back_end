@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" Redis Module """
+"""Redis basic"""
 
 import redis
 import uuid
@@ -8,7 +8,7 @@ from functools import wraps
 
 
 def count_calls(method: Callable) -> Callable:
-    """ Decorator that tracks how many times a function is invoked """
+    """ Decorator that counts call function"""
     @wraps(method)
     def wrapper(self, *args, **kwds):
         key = method.__qualname__
@@ -18,13 +18,14 @@ def count_calls(method: Callable) -> Callable:
 
 
 def call_history(method: Callable) -> Callable:
-    """ Decorator that logs function inputs and outputs """
+    """Decorator to store the history of the function"""
     @wraps(method)
     def wrapper(self, *args, **kwds):
         key = method.__qualname__
         input_key = key + ":inputs"
         output_key = key + ":outputs"
-        self._redis.rpush(input_key, str(args))
+        data = str(args)
+        self._redis.rpush(input_key, data)
         output = method(self, *args, **kwds)
         self._redis.rpush(output_key, str(output))
         return output
@@ -32,7 +33,7 @@ def call_history(method: Callable) -> Callable:
 
 
 def replay(fn: Callable):
-    """ Displays the function call history, including input-output pairs """
+    """Function that display the history of calls function"""
     redis_instance = redis.Redis()
     function_name = fn.__qualname__
     call_count = redis_instance.get(function_name)
@@ -57,29 +58,29 @@ def replay(fn: Callable):
 
 
 class Cache():
-    """ A simple cache class for interacting with Redis """
+    """Cache class to store data using Redis. """
 
     def __init__(self):
-        """ Initialize the Redis client and clear the database """
+        """Initialize a Redis instance and flush the database"""
         self._redis = redis.Redis()
         self._redis.flushdb()
 
     @call_history
     @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
-        """ Store a piece of data in Redis, associated with a unique key """
-        gen = str(uuid.uuid4())
-        self._redis.set(gen, data)
-        return gen
+        """Store data in Redis and return the generated key"""
+        key = str(uuid.uuid4())
+        self._redis.set(key, data)
+        return key
 
     def get(self, key: str,
             fn: Optional[Callable] = None) -> Union[str, bytes, int, float]:
-        """ Retrieve data from Redis and optionally apply a function to the result """
+        """Retrieve data from Redis and apply the conversion if provided."""
         value = self._redis.get(key)
         return value if not fn else fn(value)
 
     def get_int(self, key: str) -> int:
-        """ Retrieve data as an integer """
+        """Retrieve an integer from Redis."""
         value = self._redis.get(key)
         try:
             value = int(value.decode("utf-8"))
@@ -88,6 +89,6 @@ class Cache():
         return value
 
     def get_str(self, key):
-        """ Retrieve data as a string """
+        """ Retrieve a string from redis """
         value = self._redis.get(key)
         return value.decode("utf-8")
