@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+"""Initialize API v1 blueprint and routes.
+"""
+
 from flask import Blueprint
 
 app_views = Blueprint("app_views", __name__, url_prefix="/api/v1")
