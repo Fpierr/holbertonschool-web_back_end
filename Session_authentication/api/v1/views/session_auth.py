@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Session authentication routes for login and logout endpoints.
+"""Session authentication view module.
+Handles login and logout routes for session-based authentication.
 """
 
 from flask import request, jsonify, abort
@@ -10,12 +11,12 @@ from api.v1.views import app_views
 
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
 def session_login():
-    """Handles user login with session creation."""
-    email = request.form.get("email")
+    """Creates a session after verifying user credentials."""
+    email = request.form.get('email')
     if not email:
         return jsonify({"error": "email missing"}), 400
 
-    password = request.form.get("password")
+    password = request.form.get('password')
     if not password:
         return jsonify({"error": "password missing"}), 400
 
@@ -41,10 +42,9 @@ def session_login():
     return response
 
 
-@app_views.route('/auth_session/logout',
-                 methods=['DELETE'], strict_slashes=False)
+@app_views.route('/auth_session/logout', methods=['DELETE'], strict_slashes=False)
 def session_logout():
-    """Handles user logout by destroying session."""
+    """Destroys the session associated with the request."""
     from api.v1.app import auth
     if not auth.destroy_session(request):
         abort(404)
