@@ -39,5 +39,11 @@ or as a development dependency for your project:
 
 ```$ npm install --save-dev mocha```
 
+#### Run test for task 0 and 1 
+``` npm test 0-calcul.test.js
+    npm test 1-calcul.test.js
+```
+
+
 ## Author
 [Fanuel PIERRE](https://github.com/fpierr)
