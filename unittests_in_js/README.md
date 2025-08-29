@@ -47,6 +47,7 @@ or as a development dependency for your project:
     npm test 1-calcul.test.js
     npm test 2-calcul_chai.test.js
     npx mocha 3-payment.test.js
+    npx mocha 4-payment.test.js
 ```
 
 
