@@ -39,11 +39,14 @@ or as a development dependency for your project:
 
 ```$ npm install --save-dev mocha```
 
+```$ npm install mocha chai sinon --save-dev```
+
+
 #### Run test for task
 ``` npm test 0-calcul.test.js
     npm test 1-calcul.test.js
     npm test 2-calcul_chai.test.js
-
+    npx mocha 3-payment.test.js
 ```
 
 
