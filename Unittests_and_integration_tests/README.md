@@ -9,7 +9,7 @@ Integration tests aim to test a code path end-to-end. In general, only low level
 
 Integration tests will test interactions between every part of your code.
 
-Execute your tests with
+### Execution of the tests with :
 ```
 $ python - m unittest path/to/test_file.py
 ```
